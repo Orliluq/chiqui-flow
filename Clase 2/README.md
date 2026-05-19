@@ -70,7 +70,11 @@ Usar siempre el formato %nombre% para búsqueda parcial.
 Por ejemplo: %Eric Monne%.
 ```
 
-## 💡 ¿Por qué usar %nombre%?
+## 📸 Implementación del Workflow
+
+![Implementación del Workflow](clase_2.jpg)
+
+## 💡 ¿Por qué usar `%nombre%`?
 
 En MySQL:
 
@@ -157,9 +161,9 @@ El agente ya sabe de qué empleado se está hablando.
 
 Eso ya es comportamiento inteligente real.
 
-## 🛠 Buenas Prácticas (Como se ha hecho siempre)
+## 🛠 Buenas Prácticas
 
-- ✔ Forzar formato %nombre% desde la descripción
+- ✔ Forzar formato `%nombre%` desde la descripción
 - ✔ No depender del usuario para escribir comodines
 - ✔ Probar consultas directamente en MySQL primero
 - ✔ Verificar que el campo correcto tenga LIKE
@@ -171,8 +175,8 @@ Antes de publicar:
 
 - ¿El tool está conectado al AI Agent?
 - ¿El Value está "Defined automatically by the model"?
-- ¿La descripción menciona el uso de %nombre%?
-- ¿Funciona sin que el usuario escriba %?
+- ¿La descripción menciona el uso de `%nombre%`?
+- ¿Funciona sin que el usuario escriba `%`?
 - ¿Los logs muestran el parámetro correcto?
 
 ## 📌 Resultado Final Esperado
@@ -183,6 +187,6 @@ Un chat donde el usuario pueda escribir:
 - "Datos de Lima"
 - "Información de Marketing"
 
-Y el sistema responda con datos reales desde MySQL, sin que el usuario tenga que saber qué es LIKE, ni %, ni SQL.
+Y el sistema responda con datos reales desde MySQL, sin que el usuario tenga que saber qué es `LIKE`, ni `%`, ni SQL.
 
 Porque la complejidad debe estar detrás del telón. Como siempre ha sido en los buenos sistemas.
