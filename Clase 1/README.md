@@ -83,7 +83,7 @@ Flujo de ingestión:
 
 ## 🏗️ Implementación
 
-### 📊 Flujo 1: Ingestión de Conocimiento (chiquiflow_1.json)
+### 📊 Flujo 1: Ingestión de Conocimiento
 
 Este workflow se encarga de cargar el Manual de RH de ChocolaTech en el sistema de memoria del agente.
 
@@ -108,7 +108,7 @@ Convertir el documento de texto en conocimiento estructurado que el agente pueda
 El documento queda indexado como embeddings listos para búsqueda.
 
 
-## 🤖 Flujo 2: Agente de Consulta (chiquiflow_2.json)
+## 🤖 Flujo 2: Agente de Consulta
 
 Este workflow implementa el agente de IA que responde preguntas utilizando RAG.
 
@@ -212,3 +212,124 @@ Pregunta → Interpretar → Buscar → Contextualizar → Responder
 - Manual RH CHOCOLATECH → (base de conocimiento del sistema)
 - Cohere → https://cohere.com
 - GitHub CHOCOLATECH → repositorio del conocimiento
+
+---
+
+## 📊 Estado del Sistema (Opcional)
+
+Esta sección describe capacidades avanzadas del sistema que no son obligatorias para el funcionamiento básico del RAG, pero elevan el proyecto a un nivel de observabilidad y arquitectura profesional.
+
+### 🧠 Capacidades ya implementadas
+
+El sistema actual cuenta con los siguientes componentes activos:
+
+- **RAG funcional** ✔️
+El sistema es capaz de recuperar información relevante desde un vector store basado en el Manual de RH de ChocolaTech y usarla como contexto para responder.
+- **Reranking real** ✔️
+Se utiliza el modelo rerank-multilingual-v3.0 de Cohere para ordenar los chunks por relevancia real, mejorando la calidad del contexto final.
+- **Filtrado inteligente** ✔️
+Los chunks con baja relevancia (score < 0.4) son descartados automáticamente, evitando ruido en la generación de respuestas.
+- **Trazabilidad del razonamiento** ✔️
+El sistema registra el proceso completo de recuperación, ranking y selección de información, permitiendo inspeccionar cómo “pensó” el agente antes de responder.
+
+### Qué habilita esto en el sistema
+
+Estas capacidades permiten que el agente no solo responda preguntas, sino que:
+
+- Muestre evidencia de cómo llegó a una respuesta
+- Permita depurar la calidad del retrieval
+- Mejore progresivamente la precisión del RAG
+- Se comporte como un sistema observables tipo LangSmith / OpenAI Traces
+
+---
+
+## 🏗️ Diagrama actual del sistema
+
+<div align="center">
+
+
+```mermaid
+
+flowchart TD
+
+A[Usuario] --> B[AI Agent]
+
+B --> C[Chat Model]
+B --> D[Memory Buffer]
+B --> E[Vector Store Retrieval]
+
+E --> F[Embeddings Cohere]
+F --> G[Reranker Cohere]
+
+G --> H[Top K Relevant Chunks]
+
+H --> C
+
+C --> I[Final Answer]
+I --> J[Response to User]
+
+```
+
+</div>
+
+---
+
+### Agent + Vector Store + Reranker + Memory
+
+![Flujo 2 - Agente](flow_2.1.jpg)
+
+
+---
+
+### 📋 EXPLICACIÓN DEL SISTEMA
+
+🟢 **1. Entrada**
+
+El usuario envía una pregunta por chat.
+
+🟡 **2. Agente (cerebro central)**
+
+El AI Agent coordina:
+
+- memoria
+- retrieval
+- LLM
+- herramientas
+
+⚪ **3. Recuperación (RAG)**
+
+El Vector Store:
+
+- convierte texto en embeddings
+- busca chunks relevantes
+
+🔴 **4. Reranking (tu upgrade clave)**
+
+Cohere reranker:
+
+- Ordena chunks por relevancia real
+- elimina ruido semántico
+
+🟣 **5. Context assembly**
+
+El agente construye contexto final limpio.
+
+🔵 **6. Generación**
+
+El LLM genera la respuesta final usando solo contexto relevante.
+
+🟠 **7. Observabilidad (lo que estás construyendo ahora)**
+
+Aunque no es UI todavía, ya existe:
+
+- scores de chunks
+- ranking
+- trazas del retrieval
+- logs del flujo de decisión
+
+👉 Esto es la base del “LangSmith que estás simulando”
+
+Es esto:
+
+📊 “Agente con memoria + recuperación + ranking + trazabilidad”
+
