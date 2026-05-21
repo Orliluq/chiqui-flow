@@ -147,6 +147,19 @@ No es un bot, ni un flujo.
 
 Es: un sistema que convierte conocimiento en acción estructurada.
 
+## Resumen de la Inmersión
+
+- **Objetivo**: Construir un agente de IA que pueda entender preguntas, buscar información relevante y generar respuestas coherentes.
+- **Tecnologías**: OpenAI, Cohere, Gemini, n8n, Railway, Telegram.
+- **Flujo**: Usuario → Interpreta intención → Router semántico → RAG → Embeddings → Búsqueda → Contexto → LLM → Formatea respuesta → Usuario.
+- **Diferencia**: IA común responde preguntas, agente de IA entiende intención, consulta conocimiento estructurado, mantiene coherencia y puede integrarse con herramientas.
+- **Práctica**: Construir memoria para IA, transformar documentos en sistemas inteligentes, diseñar flujos de automatización reales, estructurar un agente desde cero.
+<div align="center">
+
+![Resumen Inmersión](<Resumen Inmersión.png>)
+
+</div>
+
 ---
 
 Esta inmersión no trata de aprender IA. Trata de algo más profundo: aprender a construir inteligencia que trabaja contigo.
