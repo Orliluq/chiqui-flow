@@ -1,0 +1,270 @@
+{
+  "name": "chiquiflow_3_sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        480,
+        0
+      ],
+      "id": "02779013-02db-4120-9f81-89c83cb6cbe8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        272,
+        144
+      ],
+      "id": "dc9a4ff8-74ae-4f4c-ac48-a73afa3fc801",
+      "name": "Cohere Chat Model",
+      "credentials": {
+        "cohereApi": {
+          "id": "B0IGaFlQWr6gcXhU",
+          "name": "Cohere account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        432,
+        176
+      ],
+      "id": "2387921e-9e12-4fec-a7b8-91b6f2e9d326",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Buscar informaciones sobre RH, asuntos con vacaciones, horarios, etc.",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        576,
+        208
+      ],
+      "id": "e70e681b-1419-4e74-8cc9-634188d83285",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "modelName": "embed-multilingual-light-v3.0"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsCohere",
+      "typeVersion": 1,
+      "position": [
+        464,
+        352
+      ],
+      "id": "a563381f-6fc1-4560-bbcc-bb2b6b0d74d3",
+      "name": "Embeddings Cohere",
+      "credentials": {
+        "cohereApi": {
+          "id": "B0IGaFlQWr6gcXhU",
+          "name": "Cohere account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        144,
+        0
+      ],
+      "id": "7f7f68d2-dc5e-49b5-a44d-5eb475fe4601",
+      "name": "Telegram Trigger",
+      "webhookId": "7fb62a9b-5dfd-4796-8464-f1b7c829f2f8",
+      "credentials": {
+        "telegramApi": {
+          "id": "ejdG1Trc9aihXdj6",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "be9c7ea9-c90c-4921-a7f9-6bfd22e7cb21",
+      "name": "Send a text message",
+      "webhookId": "c4dbaf3d-6a57-44ca-b00b-6600cf933b04",
+      "credentials": {
+        "telegramApi": {
+          "id": "GHbUx7GXRyVO6jXt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1C6tcFndWrYlSXfI1h2RHxnSQAWfSatLdzhbGrh_kH0w",
+          "mode": "list",
+          "cachedResultName": "tabla_empleados",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C6tcFndWrYlSXfI1h2RHxnSQAWfSatLdzhbGrh_kH0w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "tabla_empleados",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C6tcFndWrYlSXfI1h2RHxnSQAWfSatLdzhbGrh_kH0w/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "nombre",
+              "lookupValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', `usa siempre el formato %nombre% para busqueda parcial. Por ejemplo: %Eric Monne%`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        864,
+        176
+      ],
+      "id": "a44a8c7e-e5a1-4f33-927e-8eabc37da4f7",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JoLSQyurRaI5V5aB",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Cohere Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Cohere": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "815df88f-ba66-435c-b0c0-acb5ce319bb8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9693f34534e36492275b298785b98617cf56b19424be6f18b0ba0fc519af0b0f"
+  },
+  "id": "8DS5uyR68kzMeiEG",
+  "tags": []
+}
