@@ -156,10 +156,18 @@ Es: un sistema que convierte conocimiento en acción estructurada.
 - **Práctica**: Construir memoria para IA, transformar documentos en sistemas inteligentes, diseñar flujos de automatización reales, estructurar un agente desde cero.
 <div align="center">
 
-![Resumen Inmersión](<Resumen Inmersión.png>)
+<img src="Resumen Inmersión.png" alt="Resumen Inmersión" width="70%">
 
 </div>
 
 ---
 
-Esta inmersión no trata de aprender IA. Trata de algo más profundo: aprender a construir inteligencia que trabaja contigo.
+Esta inmersión no trata de aprender IA, trata de algo más profundo: aprender a construir inteligencia que trabaja contigo.
+
+---
+
+<div align="center">
+
+<img src="Testimonio Inmersión.png" alt="Testimonio Inmersión" width="50%">
+
+</div>
